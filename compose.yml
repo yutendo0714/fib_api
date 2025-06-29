@@ -1,5 +1,5 @@
 volumes: # データを永続保存するためにdocker volumeを設定
-  mysql-volume:
+  redis-volume:
 
 services:
   # phpの設定
@@ -30,3 +30,11 @@ services:
       - app # 先に起動するコンテナのサービス名を指定（コンテナ名ではない）
     volumes:
       - ./src:/var/www/html
+
+  redis:
+    container_name: fib-redis
+    image: redis:7.2-alpine
+    ports:
+      - ${REDIS_PORT}:6379
+    volumes:
+      - redis-volume:/var/lib/redis
