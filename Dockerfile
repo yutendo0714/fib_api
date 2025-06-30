@@ -20,10 +20,10 @@ RUN a2enmod rewrite
 WORKDIR /var/www/html
 COPY ./src /var/www/html
 
+COPY ./start.sh /start.sh
+RUN chmod +x /start.sh
+
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 storage bootstrap/cache
 
-RUN composer install --no-dev --optimize-autoloader \
-    && php artisan config:cache \
-    && php artisan route:cache \
-    && php artisan view:cache
+CMD ["/start.sh"]
