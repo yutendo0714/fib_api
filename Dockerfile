@@ -20,9 +20,6 @@ RUN a2enmod rewrite
 WORKDIR /var/www/html
 COPY ./src /var/www/html
 
-# Secrets を Laravel に配置
-RUN cp /etc/secrets/.env /var/www/html/.env
-
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 storage bootstrap/cache
 
