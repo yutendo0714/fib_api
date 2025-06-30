@@ -21,11 +21,11 @@ jobs:
 
       - name: Install Composer Dependencies
         run: composer install --no-progress --no-suggest --prefer-dist
-        working-directory: ./
+        working-directory: ./src
 
-      - name: Copy env.testing file
+      - name: Copy env file
         if: always()
-        run: cp ./.env.example ./.env
+        run: cp ./.env ./.env
         working-directory: ./
 
       - name: Clear Application Cache
