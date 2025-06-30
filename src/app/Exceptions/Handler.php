@@ -38,6 +38,7 @@ class Handler extends ExceptionHandler
             return response()->json([
                 'status' => 400,
                 'message' => 'Bad request.',
+                'error' => $exception->getMessage(),
             ], 400);
         }
 
@@ -45,6 +46,7 @@ class Handler extends ExceptionHandler
             return response()->json([
                 'status' => 401,
                 'message' => 'Unauthenticated.',
+                'error' => $exception->getMessage(),
             ], 401);
         }
 
@@ -52,6 +54,7 @@ class Handler extends ExceptionHandler
             return response()->json([
                 'status' => 403,
                 'message' => 'Forbidden.',
+                'error' => $exception->getMessage(),
             ], 403);
         }
 
@@ -59,6 +62,7 @@ class Handler extends ExceptionHandler
             return response()->json([
                 'status' => 404,
                 'message' => 'Not found.',
+                'error' => $exception->getMessage(),
             ], 404);
         }
 
@@ -66,6 +70,7 @@ class Handler extends ExceptionHandler
         return response()->json([
             'status' => 500,
             'message' => 'Internal server error.',
+            'error' => $exception->getMessage(),
         ], 500);
     }
 }
