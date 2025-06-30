@@ -27,6 +27,11 @@ jobs:
         run: cp .env.example .env
         working-directory: ./src
 
+      - name: Generate application key
+        run: php artisan key:generate
+        working-directory: ./src
+
+
       - name: Clear cache
         run: php artisan cache:clear
         working-directory: ./src
