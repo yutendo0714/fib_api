@@ -1,37 +1,43 @@
-# 公開レポジトリからベースイメージをインポート（Laravel10はphp8.2以上が必須）
+# =========================
+# PHP-FPM + Nginx + Node + Composerを含むDockerfile
+# =========================
 FROM php:8.2-fpm
 
-# COPY php.ini
+# タイムゾーン・環境変数設定
+ENV TZ=Asia/Tokyo
+
+# php.ini
 COPY ./docker/php/php.ini /usr/local/etc/php/php.ini
 
-# Composer install（マルチステージビルド）
-# マルチステージビルドを使用すると、composerのバージョン管理が楽（今回は常に最新版を指定）
+# Composer（最新を使用）
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# install Node.js（マルチステージビルド）
-# Breezeにも必要
-# node:latestにするとバージョン依存のエラーが発生するのでLTSバージョンを指定（esbuildのエラー）
+# Node.js LTS
 COPY --from=node:20.16 /usr/local/bin /usr/local/bin
 COPY --from=node:20.16 /usr/local/lib /usr/local/lib
 
-# パッケージ管理ツール（apt-get）の更新＆必要パッケージのインストール
+# 必要パッケージとPHP拡張
 RUN apt-get update \
-    && apt-get -y install \
-    git \
-    zip \
-    unzip \
-    vim \
-    && docker-php-ext-install pdo_mysql bcmath \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+ && apt-get install -y nginx git zip unzip vim curl \
+ && docker-php-ext-install pdo_mysql bcmath \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
 
-RUN git config --global user.name "githubのユーザー名" \
-    && git config --global user.email "githubに登録したメールアドレス" \
-    && git config --global --add safe.directory /var/www/html 
-    # PHP拡張モジュール（Laravelに必要で不足しているものをインストール）：pdo_mysql（PHPからMySQLへのアクセスを可能にする）、bcmath
-
-# コンテナに入ったとき（docker-compose exec app bash）の作業ディレクトリを指定
+# Laravel作業ディレクトリ
 WORKDIR /var/www/html
 
-# Laravel アプリのコードをコピー（Render では volume mount できないため）
-COPY . /var/www/html
+# Laravelプロジェクトをコンテナにコピー（Renderではvolume不可）
+COPY ./src /var/www/html
+
+# Nginx config
+COPY ./docker/nginx/default.conf /etc/nginx/conf.d/default.conf
+
+# 実行時スクリプト（nginx + php-fpm）
+COPY ./start.sh /start.sh
+RUN chmod +x /start.sh
+
+# ポート指定（Render側に合わせて80番）
+EXPOSE 80
+
+# コンテナ起動時コマンド
+CMD ["/start.sh"]
