@@ -7,7 +7,14 @@ use Illuminate\Support\Facades\Cache;
 
 class FibonacciService
 {
-    private function product_bcmath($a, $b)
+    /**
+     * 2x2 行列の積（bcmath 使用）
+     *
+     * @param array<array<string>> $a
+     * @param array<array<string>> $b
+     * @return array<array<string>>
+     */
+    private function product_bcmath(array $a, array $b): array
     {
         $n = 2;
         $c = [
@@ -26,7 +33,7 @@ class FibonacciService
     }
 
 
-    private function computeFibonacci($N)
+    private function computeFibonacci(int $N): string
     {
         $S = strrev(decbin((int)$N));
         $M = strlen($S);
@@ -56,7 +63,7 @@ class FibonacciService
         return $R[0][1]; // フィボナッチN項目（文字列として返る）
     }
 
-    public function fibonacci($N)
+    public function fibonacci(int $N): string
     {
         $key = "fibonacci_$N";
 
