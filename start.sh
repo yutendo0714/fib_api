@@ -3,6 +3,9 @@
 # Secret Files にある .env を Laravel のルートにコピー（Render上でのみ存在する）
 [ -f /etc/secrets/.env ] && cp /etc/secrets/.env /var/www/html/.env
 
+# Composer 依存解決
+composer install --no-dev --optimize-autoloader
+
 # Laravel キャッシュクリア・再構築
 php artisan config:clear
 php artisan config:cache
