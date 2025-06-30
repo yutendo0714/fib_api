@@ -34,4 +34,4 @@ RUN git config --global user.name "githubのユーザー名" \
 WORKDIR /var/www/html
 
 # Laravel アプリのコードをコピー（Render では volume mount できないため）
-COPY ./src /var/www/html
+COPY . /var/www/html
