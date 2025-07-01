@@ -29,7 +29,7 @@ tests/
 ├── Feature/
 │ └── FibonacciTest.php # 機能テスト
 └── Unit/
-└── FibonacciTest.php # 単体テスト
+│ └── FibonacciTest.php # 単体テスト
 ```
 
 ---
