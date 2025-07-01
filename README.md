@@ -7,6 +7,28 @@ HTTP GETメソッドで数列のインデックスを指定すると、その位
 
 ---
 
+## ソースコード構成
+
+app/
+├── Http/
+│ ├── Controllers/
+│ │ └── FibonacciController.php # フィボナッチAPIのエンドポイント制御
+│ ├── Requests/
+│ │ └── FibonacciRequest.php # 入力バリデーション
+├── Services/
+│ └── FibonacciService.php # フィボナッチ数列のロジック（BCMath使用）
+
+routes/
+└── api.php # APIルート定義（/fib）
+
+tests/
+├── Feature/
+│ └── FibonacciTest.php # 機能テスト
+├── Unit/
+│ └── FibonacciTest.php # 単体テスト
+
+---
+
 ## エンドポイント
 
 ### `GET /fib`
@@ -17,13 +39,9 @@ HTTP GETメソッドで数列のインデックスを指定すると、その位
 |------------|--------|------|-----------------------------------|
 | `n`        | 整数   | はい | フィボナッチ数列のインデックス（0以上） |
 
----
-
 ## リクエスト例
 
 GET http://your-domain.com/fib?n=99
-
----
 
 ## レスポンス例
 
