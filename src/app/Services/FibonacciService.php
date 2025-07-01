@@ -24,8 +24,8 @@ class FibonacciService
         for ($i = 0; $i < $n; $i++) {
             for ($j = 0; $j < $n; $j++) {
                 for ($k = 0; $k < $n; $k++) {
-                    $mul = bcmul($a[$i][$k], $b[$k][$j]);   // $a[i][k] * $b[k][j]
-                    $c[$i][$j] = bcadd($c[$i][$j], $mul);   // +=
+                    $mul = bcmul($a[$i][$k], $b[$k][$j]);
+                    $c[$i][$j] = bcadd($c[$i][$j], $mul);
                 }
             }
         }
@@ -52,7 +52,7 @@ class FibonacciService
         $R = [
             ['1', '0'],
             ['0', '1']
-        ]; // 単位行列
+        ];
 
         for ($i = 0; $i < $M; $i++) {
             if ($S[$i] === '1') {
@@ -60,14 +60,14 @@ class FibonacciService
             }
         }
 
-        return $R[0][1]; // フィボナッチN項目（文字列として返る）
+        return $R[0][1];
     }
 
     public function fibonacci(int $N): string
     {
         $key = "fibonacci_$N";
 
-        // キャッシュから取得（デフォルトドライバーがRedisならRedisを使う）
+        // キャッシュから取得
         return Cache::remember($key, now()->addMinutes(60), function () use ($N) {
             return $this->computeFibonacci($N);
         });
