@@ -9,23 +9,26 @@ HTTP GETメソッドで数列のインデックスを指定すると、その位
 
 ## ソースコード構成
 
+```
 app/
+├── Exceptions/
+│ └── Handler.php # 例外ハンドリング（バリデーション・認証など）
 ├── Http/
 │ ├── Controllers/
 │ │ └── FibonacciController.php # フィボナッチAPIのエンドポイント制御
-│ ├── Requests/
-│ │ └── FibonacciRequest.php # 入力バリデーション
+│ └── Requests/
+│ └── FibonacciRequest.php # 入力バリデーション
 ├── Services/
 │ └── FibonacciService.php # フィボナッチ数列のロジック（BCMath使用）
-
 routes/
 └── api.php # APIルート定義（/fib）
 
 tests/
 ├── Feature/
 │ └── FibonacciTest.php # 機能テスト
-├── Unit/
-│ └── FibonacciTest.php # 単体テスト
+└── Unit/
+└── FibonacciTest.php # 単体テスト
+```
 
 ---
 
