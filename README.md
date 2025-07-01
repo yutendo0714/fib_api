@@ -22,7 +22,9 @@ app/
 │ └── FibonacciService.php # フィボナッチ数列のロジック（BCMath使用）
 routes/
 └── api.php # APIルート定義（/fib）
-
+storage/
+├── logs/
+│ └── laravel-yyyy-mm-dd.log # ログ出力
 tests/
 ├── Feature/
 │ └── FibonacciTest.php # 機能テスト
